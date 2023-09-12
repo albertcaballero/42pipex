@@ -1,0 +1,128 @@
+
+strerror
+
+int main () {
+   FILE *fp;
+
+   fp = fopen("file.txt","r");
+   if( fp == NULL ) {
+      printf("Error: %s\n", strerror(errno));
+   }
+   
+   return(0);
+}
+-----------------
+The access() function checks to see if the file or directory specified by path exists and if it can be accessed with the file access permissions given by amode. However, unlike other functions (open() for example),
+it uses the real user ID and real group ID in place of the effective user and group IDs.
+
+#include <unistd.h>
+
+int access( const char * path, int amode );
+path
+The path to the file or directory that you want to access.
+amode
+The access mode you want to check. This must be either:
+F_OK -- test for file existence.
+or a bitwise ORing of the following access permissions to be checked, as defined in the header <unistd.h>:
+
+R_OK -- test for read permission.
+W_OK -- test for write permission.
+X_OK -- for a directory, test for search permission. Otherwise, test for execute permissio
+----------------------
+The dup() system call creates a copy of a file descriptor.
+
+It uses the lowest-numbered unused descriptor for the new descriptor.
+If the copy is successfully created, then the original and copy file descriptors may be used interchangeably.
+They both refer to the same open file description and thus share file offset and file status flags.
+Syntax:
+
+int dup(int oldfd);
+oldfd: old file descriptor whose copy is to be created.
+------------------------
+The dup2() system call is similar to dup() but the basic difference between them is that instead of using the lowest-numbered unused file descriptor, it uses the descriptor number specified by the user.
+Syntax:
+
+int dup2(int oldfd, int newfd);
+oldfd: old file descriptor
+newfd new file descriptor which is used by dup2() to create a copy.
+--------------------------
+#include <unistd.h>
+
+       int execve(const char *pathname, char *const _Nullable argv[],
+                  char *const _Nullable envp[]);
+DESCRIPTION         top
+       execve() executes the program referred to by pathname.  This
+       causes the program that is currently being run by the calling
+       process to be replaced with a new program, with newly initialized
+       stack, heap, and (initialized and uninitialized) data segments.
+----------------------------
+The Fork system call is used for creating a new process in Linux, and Unix systems, which is called the child process, which runs concurrently with the process that makes the fork() call (parent process). After a new child process is created, both processes will execute the next instruction following the fork() system call.
+
+The child process uses the same pc(program counter), same CPU registers, and same open files which use in the parent process. It takes no parameters and returns an integer value.
+
+Below are different values returned by fork().
+
+Negative Value: The creation of a child process was unsuccessful.
+Zero: Returned to the newly created child process.
+Positive value: Returned to parent or caller. The value contains the process ID of the newly created child process.
+----------------------------
+Function: int unlink (const char *filename)
+Preliminary: | MT-Safe | AS-Safe | AC-Safe | See POSIX Safety Concepts.
+
+The unlink function deletes the file name filename. If this is a file’s sole name, the file itself is also deleted. (Actually, if any process has the file open when this happens, deletion is postponed until all processes have closed the file.)
+
+The function unlink is declared in the header file unistd.h.
+
+This function returns 0 on successful completion, and -1 on error. In addition to the usual file name errors (see File Name Errors), the following errno error conditions are defined for this function:
+-------------------------
+Conceptually, a pipe is a connection between two processes, such that the standard output from one process becomes the standard input of the other process. In UNIX Operating System, Pipes are useful for communication between related processes(inter-process communication).
+
+Pipe is one-way communication only i.e we can use a pipe such that One process write to the pipe, and the other process reads from the pipe. It opens a pipe, which is an area of main memory that is treated as a “virtual file”.
+The pipe can be used by the creating process, as well as all its child processes, for reading and writing. One process can write to this “virtual file” or pipe and another related process can read from it.
+If a process tries to read before something is written to the pipe, the process is suspended until something is written.
+The pipe system call finds the first two available positions in the process’s open file table and allocates them for the read and write ends of the pipe.
+int pipe(int fds[2]);
+
+Parameters :
+fd[0] will be the fd(file descriptor) for the 
+read end of pipe.
+fd[1] will be the fd for the write end of pipe.
+Returns : 0 on Success.
+-1 on error.
+Pipes behave FIFO(First in First out), Pipe behave like a queue data structure.
+Size of read and write don’t have to match here. We can write 512 bytes at a time but we can read only 1 byte at a time in a pipe.
+-----------------------------
+A call to wait() blocks the calling process until one of its child processes exits or a signal is received. After child process terminates, parent continues its execution after wait system call instruction. 
+Child process may terminate due to any of these: 
+
+It calls exit();
+It returns (an int) from main
+It receives a signal (from the OS or another process) whose default action is to terminate.
+If any process has more than one child processes, then after calling wait(), parent process has to be in wait state if no child terminates. 
+If only one child process is terminated, then return a wait() returns process ID of the terminated child process. 
+If more than one child processes are terminated than wait() reap any arbitrarily child and return a process ID of that child process. 
+When wait() returns they also define exit status (which tells our, a process why terminated) via pointer, If status are not NULL.
+If any process has no child process then wait() returns immediately “-1”.
+------------------------------
+Suspends the calling process until a child process ends or is stopped. More precisely, waitpid() suspends the calling process until the system gets status information on the child. If the system already has status information on an appropriate child when waitpid() is called, waitpid() returns immediately. waitpid() is also ended if the calling process receives a signal whose action is either to execute a signal handler or to end the process.
+pid_t pid
+Specifies the child processes the caller wants to wait for:
+If pid is greater than 0, waitpid() waits for termination of the specific child whose process ID is equal to pid.
+If pid is equal to zero, waitpid() waits for termination of any child whose process group ID is equal to that of the caller.
+If pid is -1, waitpid() waits for any child process to end.
+If pid is less than -1, waitpid() waits for the termination of any child whose process group ID is equal to the absolute value of pid.
+int *status_ptr
+Points to a location where waitpid() can store a status value. This status value is zero if the child process explicitly returns zero status. Otherwise, it is a value that can be analyzed with the status analysis macros described in “Status Analysis Macros”, below.
+The status_ptr pointer may also be NULL, in which case waitpid() ignores the child's return status.
+
+int options
+Specifies additional information for waitpid(). The options value is constructed from the bitwise inclusive-OR of zero or more of the following flags defined in the sys/wait.h header file:
+---------------------------
+The C library function void perror(const char *str) prints a descriptive error message to stderr. First the string str is printed, followed by a colon then a space.
+
+Declaration
+Following is the declaration for perror() function.
+
+void perror(const char *str)
+Parameters
+str − This is the C string containing a custom message to be printed before the error message itself.
