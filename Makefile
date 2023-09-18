@@ -11,23 +11,23 @@ PURPLE  =   \033[38;5;93m
 PINK	=	\033[38;5;219m
 NC      =   \033[0m
 
-SRC = pipex.c
+SRC = pipex.c parseargs.c
 
 all: makelib $(NAME)
 
 $(NAME): $(LIBRARY) Makefile $(SRC) libft/libft.a
-	$(CC) $(CFLAGS) $(SRC) -L./libft -lft -L../printf -lftprintf -o $(NAME)
+	$(CC) $(CFLAGS) $(SRC) -L./libft -lft -L./printf -lftprintf -o $(NAME)
 
 makelib:
 	$(MAKE) -C ./libft bonus
-	$(MAKE) -C ../printf all
+	$(MAKE) -C ./printf all
 
 clean:
 	$(MAKE) -C ./libft clean
 
 fclean: clean
 	$(MAKE) -C ./libft fclean
-	$(MAKE) -C ../printf fclean
+	$(MAKE) -C ./printf fclean
 	rm -f $(NAME)
 
 re: fclean all
