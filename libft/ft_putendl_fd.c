@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 17:36:06 by albert            #+#    #+#             */
-/*   Updated: 2023/09/18 11:29:22 by alcaball         ###   ########.fr       */
+/*   Created: 2023/05/23 15:50:51 by alcaball          #+#    #+#             */
+/*   Updated: 2023/05/30 17:09:21 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include <fcntl.h>
-# include <unistd.h>
-# include <string.h>
-# include <errno.h>
+void	ft_putendl_fd(char *s, int fd)
+{
+	int	i;
 
-size_t	ft_strlen(const char *str);
-int		ft_printf(const char *str, ...);
-
-#endif
+	i = ft_strlen((const char *) s);
+	write(fd, s, i);
+	write(fd, "\n", 1);
+	return ;
+}

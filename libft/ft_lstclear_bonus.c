@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 17:36:06 by albert            #+#    #+#             */
-/*   Updated: 2023/09/18 11:29:22 by alcaball         ###   ########.fr       */
+/*   Created: 2023/05/27 17:02:26 by alcaball          #+#    #+#             */
+/*   Updated: 2023/05/30 13:01:13 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include <fcntl.h>
-# include <unistd.h>
-# include <string.h>
-# include <errno.h>
+void	ft_lstclear(t_list **lst, void (*del)(void *))
+{
+	t_list	*temp;
 
-size_t	ft_strlen(const char *str);
-int		ft_printf(const char *str, ...);
-
-#endif
+	while (ft_lstsize(*lst) > 0)
+	{
+		temp = *lst;
+		del((*lst)->content);
+		*lst = temp->next;
+		free (temp);
+	}
+}

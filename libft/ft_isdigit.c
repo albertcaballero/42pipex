@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 17:36:06 by albert            #+#    #+#             */
-/*   Updated: 2023/09/18 11:29:22 by alcaball         ###   ########.fr       */
+/*   Created: 2023/05/02 16:23:07 by alcaball          #+#    #+#             */
+/*   Updated: 2023/05/09 12:30:11 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include <fcntl.h>
-# include <unistd.h>
-# include <string.h>
-# include <errno.h>
-
-size_t	ft_strlen(const char *str);
-int		ft_printf(const char *str, ...);
-
-#endif
+int	ft_isdigit(int c)
+{
+	if (c < 48 || c > 57)
+		return (0);
+	return (1);
+}

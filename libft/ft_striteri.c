@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 17:36:06 by albert            #+#    #+#             */
-/*   Updated: 2023/09/18 11:29:22 by alcaball         ###   ########.fr       */
+/*   Created: 2023/05/23 11:40:50 by alcaball          #+#    #+#             */
+/*   Updated: 2023/05/23 16:45:17 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include <fcntl.h>
-# include <unistd.h>
-# include <string.h>
-# include <errno.h>
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
+{
+	unsigned int		i;
 
-size_t	ft_strlen(const char *str);
-int		ft_printf(const char *str, ...);
-
-#endif
+	i = 0;
+	while (s[i])
+	{
+		f(i, &s[i]);
+		i++;
+	}
+}

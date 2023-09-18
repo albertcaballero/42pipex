@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 17:36:06 by albert            #+#    #+#             */
-/*   Updated: 2023/09/18 11:29:22 by alcaball         ###   ########.fr       */
+/*   Created: 2023/06/01 12:12:09 by alcaball          #+#    #+#             */
+/*   Updated: 2023/06/09 13:43:22 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-# include <fcntl.h>
 # include <unistd.h>
-# include <string.h>
-# include <errno.h>
+# include <stdarg.h>
+# include <stdio.h>
+# include <stddef.h>
 
-size_t	ft_strlen(const char *str);
 int		ft_printf(const char *str, ...);
+int		ft_putnbr_fd(int n, int fd);
+int		ft_putchar_fd(char c, int fd);
+int		ft_putstr_fd(char *s, int fd);
+size_t	ft_strlen(const char *str);
+int		porc(char id, va_list varg);
+int		ft_isneg(long n, int flag);
+int		ft_puthex(int num, int cse);
+int		ft_put_add(size_t ad);
+int		ft_putuns(unsigned int n);
 
 #endif

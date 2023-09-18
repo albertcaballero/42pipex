@@ -3,25 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albert <albert@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:35:29 by albert            #+#    #+#             */
-/*   Updated: 2023/09/08 18:12:53 by albert           ###   ########.fr       */
+/*   Updated: 2023/09/18 11:28:45 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+int	test_file_acc(char *f1, char *f2)
+{
+	int		file1;
+	//char	*file1_text;
+
+	ft_printf("%s %s", f1, f2);
+	file1 = access(f1, F_OK);
+	if (file1 < 0)
+		return (-1);
+	return (-1);
+}
+
 int	main(int argc, char **argv)
 {
-	int 	file1;
-	char	*file1_text;
-	
 	if (argc <= 5)
 		return (0);
-	file1 = access(argv[1], F_OK);
-	if (file1 < 0)
-		return (strerror(errno));
+	if (test_file_acc(argv[1], argv[argc - 1]) == -1)
+		return (0);
 }
 
 

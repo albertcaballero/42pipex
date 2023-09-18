@@ -1,24 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 17:36:06 by albert            #+#    #+#             */
-/*   Updated: 2023/09/18 11:29:22 by alcaball         ###   ########.fr       */
+/*   Created: 2023/05/04 11:57:02 by alcaball          #+#    #+#             */
+/*   Updated: 2023/05/30 17:11:33 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include <fcntl.h>
-# include <unistd.h>
-# include <string.h>
-# include <errno.h>
+char	*ft_strrchr(const char *s, int c)
+{
+	size_t	len;
+	char	*ps;
 
-size_t	ft_strlen(const char *str);
-int		ft_printf(const char *str, ...);
-
-#endif
+	ps = (char *)s;
+	len = ft_strlen(s) + 1;
+	while (len > 0)
+	{
+		len--;
+		if (ps[len] == (char) c)
+			return (&ps[len]);
+	}
+	return (NULL);
+}
+/*
+int	main(void)
+{
+	const char *s = "abourno";
+	int c = 97;
+	printf("1 is %s\n", strrchr(s, c));
+	printf("2 is %s", ft_strrchr(s, c));
+	return (0);
+}//*/

@@ -1,24 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 17:36:06 by albert            #+#    #+#             */
-/*   Updated: 2023/09/18 11:29:22 by alcaball         ###   ########.fr       */
+/*   Created: 2023/05/04 15:13:21 by alcaball          #+#    #+#             */
+/*   Updated: 2023/05/25 13:49:20 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include <fcntl.h>
-# include <unistd.h>
-# include <string.h>
-# include <errno.h>
+void	*ft_memchr(const void *s, int c, size_t n)
+{
+	size_t	i;
+	char	*str;
 
-size_t	ft_strlen(const char *str);
-int		ft_printf(const char *str, ...);
-
-#endif
+	i = 0;
+	str = (char *) s;
+	while (i < n)
+	{
+		if (str[i] == (char) c)
+			return (&str[i]);
+		i++;
+	}
+	return (NULL);
+}
+/*
+int	main(void)
+{
+	char	s[] = "jhhhmmbaf";
+	int		c = 97;
+	size_t	n = 2;
+	printf("%s\n", memchr(s, c, n));
+	printf("%s", ft_memchr(s, c, n));
+	return(0);
+}
+//*/
