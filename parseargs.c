@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:44:17 by alcaball          #+#    #+#             */
-/*   Updated: 2023/09/18 13:44:52 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/09/18 16:19:30 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,18 @@ int	test_file_acc(char *f1, char *f2)
 	return (0);
 }
 
-int	parse_comms(char *c1, char **envp)
+t_comm	parse_comms(char *c1, char **envp)
 {
-	t_comm	cmd1;
-	char	*path;
+	t_comm	cmd;
+	char	*path_envp;
 	char	**paths;
-	char	**splitcomm;
-	int		i;
+	char	**commands;
 
-	(void) c1;
-	(void) cmd1;
-	(void) splitcomm;
-	//splitcomm = ft_split(c1, ' ');
-	i = 0;
-	path = ft_substr(envp[11], 5, ft_strlen(envp[11]) - 5);
-	ft_printf(path);
-	paths = ft_split(path, ':');
-	return 0;
+	path_envp = ft_substr(envp[11], 5, ft_strlen(envp[11]) - 5);
+	paths = ft_split(path_envp, ':');
+	commands = ft_split(c1, ' ');
+	cmd.arg = commands;
+	cmd.path = paths;
+	free(path_envp);
+	return (cmd);
 }
