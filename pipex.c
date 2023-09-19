@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:35:29 by albert            #+#    #+#             */
-/*   Updated: 2023/09/18 17:12:28 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/09/19 14:01:01 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc < 5)
 		return (0);
-	if (test_file_acc(argv[1], argv[argc - 1]) == -1)
+	if (test_file_acc(argv[1]) == -1)
 		return (0);
 	else
 	{
