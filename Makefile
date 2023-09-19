@@ -16,11 +16,15 @@ SRC = pipex.c parseargs.c
 all: makelib $(NAME)
 
 $(NAME): $(LIBRARY) Makefile $(SRC) libft/libft.a
-	$(CC) $(CFLAGS) $(SRC) -L./libft -lft -L./printf -lftprintf -o $(NAME)
+	@$(CC) $(CFLAGS) $(SRC) -L./libft -lft -L./printf -lftprintf -o $(NAME)
+	@rm tudu.txt
+	@printf "${PURPLE}== PIPEX COMPILED SUCCESSFULLY ==\n${NC}"
 
 makelib:
-	$(MAKE) -C ./libft bonus
-	$(MAKE) -C ./printf all
+	@$(MAKE) -C ./libft bonus -q --no-print-directory
+	@printf "${GREEN}Libft ok\n${NC}"
+	@$(MAKE) -C ./printf all -q --no-print-directory
+	@printf "${GREEN}Printf ok\n${NC}"
 
 clean:
 	$(MAKE) -C ./libft clean
