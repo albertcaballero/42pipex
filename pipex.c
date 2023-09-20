@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:35:29 by albert            #+#    #+#             */
-/*   Updated: 2023/09/19 17:27:02 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/09/20 15:52:12 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	main(int argc, char **argv, char **envp)
 	char	**paths;
 
 	if (argc < 5)
-		return (0);
+		return (write(2, "Error: Not enough arguments\n", 29));
 	if (test_file_acc(argv[1]) == -1)
 		return (perror("Error"), 0);
 	else

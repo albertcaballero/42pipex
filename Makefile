@@ -17,22 +17,26 @@ all: makelib $(NAME)
 
 $(NAME): $(LIBRARY) Makefile $(SRC) libft/libft.a
 	@$(CC) $(CFLAGS) $(SRC) -L./libft -lft -L./printf -lftprintf -o $(NAME)
-	@rm tudu.txt
 	@printf "${PURPLE}== PIPEX COMPILED SUCCESSFULLY ==\n${NC}"
 
 makelib:
-	@$(MAKE) -C ./libft bonus -q --no-print-directory
-	@printf "${GREEN}Libft ok\n${NC}"
-	@$(MAKE) -C ./printf all -q --no-print-directory
-	@printf "${GREEN}Printf ok\n${NC}"
+	@$(MAKE) -C ./libft bonus --no-print-directory -silent
+	@printf "${GREEN}Libft ok👍\n${NC}"
+	@$(MAKE) -C ./printf all --no-print-directory -silent
+	@printf "${GREEN}Printf ok👍\n${NC}"
 
 clean:
-	$(MAKE) -C ./libft clean
+	@$(MAKE) -C ./libft clean --no-print-directory -silent
 
 fclean: clean
-	$(MAKE) -C ./libft fclean
-	$(MAKE) -C ./printf fclean
-	rm -f $(NAME)
+	@printf "${RED}....EXTERMINATING....\n${NC}"
+	@$(MAKE) -C ./libft fclean --no-print-directory -silent
+	@printf "${PINK}🧨\tLIBFT\n${NC}"
+	@$(MAKE) -C ./printf fclean --no-print-directory -silent
+	@printf "${PINK}🧨\tPRINTF\n${NC}"
+	@rm -f $(NAME)
+	@printf "${PINK}🧨\tPIPEX\n${NC}"
+	@printf "${RED}.......DONE.......\n${NC}"
 
 re: fclean all
 
