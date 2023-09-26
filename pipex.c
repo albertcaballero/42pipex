@@ -6,43 +6,37 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:35:29 by albert            #+#    #+#             */
-/*   Updated: 2023/09/26 10:50:20 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/09/26 17:19:44 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ft_error(int errcode)
-{
-	ft_printf("--%i %i--", errcode, errno);
-	perror("Error");
-	exit(errcode);
-}
-
 void	child(int f1, t_comm cmd1, int *pipes, char **envp)
 {
 	int	ret;
 
+	close (pipes[0]);
 	if (dup2(f1, STDIN_FILENO) < 0)
 		ft_error(errno);
 	if (dup2(pipes[1], STDOUT_FILENO) < 0)
 		ft_error(errno);
-	close (pipes[0]);
+	close (f1);
 	ret = execve(cmd1.path, cmd1.arg, envp);
 	if (ret == -1)
 		ft_error(errno);
 }
 
-void	parent(int f2, t_comm cmd2, int *pipes, char **envp)
+void	child2(int f2, t_comm cmd2, int *pipes, char **envp)
 {
 	int	ret;
 
+	close (pipes[1]);
 	if (dup2(pipes[0], STDIN_FILENO) < 0)
 		ft_error(errno);
 	if (dup2(f2, STDOUT_FILENO) < 0)
 		ft_error(errno);
-	close (pipes[1]);
-	close (f2);
+	close(f2);
 	ret = execve(cmd2.path, cmd2.arg, envp);
 	if (ret == -1)
 		ft_error(errno);
@@ -51,6 +45,7 @@ void	parent(int f2, t_comm cmd2, int *pipes, char **envp)
 void	pipex(int *f, t_comm cmd1, t_comm cmd2, char **envp)
 {
 	pid_t	sig;
+	pid_t	sig2;
 	int		pipes[2];
 	int		status;
 
@@ -60,11 +55,15 @@ void	pipex(int *f, t_comm cmd1, t_comm cmd2, char **envp)
 		ft_error(errno);
 	else if (sig == 0)
 		child(f[0], cmd1, pipes, envp);
-	else
-	{
-		waitpid(sig, &status, 0);
-		parent(f[1], cmd2, pipes, envp);
-	}
+	sig2 = fork();
+	if (sig2 < 0)
+		ft_error(errno);
+	else if (sig2 == 0)
+		child2(f[1], cmd2, pipes, envp);
+	close (pipes[0]);
+	close (pipes[1]);
+	if (waitpid(sig2, &status, 0) == -1)
+		ft_error(errno);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -76,9 +75,9 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc != 5)
 		return (write(2, "Error: Not enough arguments\n", 29));
-	// if (test_file_acc(argv[1]) == -1)
-	// 	return (perror("Error"), 0);
-	// else
+	if (test_file_acc(argv[1]) == -1)
+		return (perror("Error"), 0);
+	else
 	{
 		f[0] = open(argv[1], O_RDONLY);
 		f[1] = open(argv[argc - 1], O_RDWR | O_CREAT, 0644);

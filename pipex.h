@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:36:06 by albert            #+#    #+#             */
-/*   Updated: 2023/09/26 10:54:24 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/09/26 15:11:16 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ char	**ft_split(char const *s, char c);
 char	*ft_strjoin(char *s1, char *s2);
 void	ft_free(char **arr);
 void	ft_error(int errcode);
+void	ft_putnbr_fd(int n, int fd);
 
 #endif

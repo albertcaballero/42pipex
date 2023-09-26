@@ -31,11 +31,15 @@ clean:
 fclean: clean
 	@printf "${RED}....EXTERMINATING....\n${NC}"
 	@$(MAKE) -C ./libft fclean --no-print-directory -silent
+	@sleep 0.5
 	@printf "${PINK}🧨\tLIBFT\n${NC}"
 	@$(MAKE) -C ./printf fclean --no-print-directory -silent
+	@sleep 0.5
 	@printf "${PINK}🧨\tPRINTF\n${NC}"
 	@rm -f $(NAME)
+	@sleep 0.5
 	@printf "${PINK}🧨\tPIPEX\n${NC}"
+	@sleep 0.5
 	@printf "${RED}.......DONE.......\n${NC}"
 
 re: fclean all
@@ -58,5 +62,20 @@ forbidden:
 	@printf "$(BLUE)\n=====EXECUTING NORMINETTE=====\n\n${RED}"
 	@norminette > /dev/null && printf "$(GREEN)	---OK---\n\n" || norminette | grep Error
 	@printf "${NC}"
+
+lesgo:
+	@printf "$(BLUE)\n\t=====ARE YOU READYYYY??=====\n\n${GREEN}"
+	@echo "\t####                      (25%)\r\c"
+	@sleep 0.5
+	@echo "\t###########               (50%)\r\c"
+	@sleep 0.5
+	@echo "\t###############           (75%)\r\c"
+	@sleep 0.5
+	@echo "\t#######################   (100%)\r\c"
+	@echo "\n"
+	@sleep 0.5
+	@printf "$(BLUE)\n\t=====DONE=====\n\n${GREEN}"
+	@sleep 2
+	@cat /dev/random
 
 .PHONY: all clean fclean re bonus

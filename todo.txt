@@ -12,63 +12,31 @@ int main () {
    return(0);
 }
 -----------------
-The access() function checks to see if the file or directory specified by path exists and if it can be accessed with the file access permissions given by amode. However, unlike other functions (open() for example),
-it uses the real user ID and real group ID in place of the effective user and group IDs.
-
-#include <unistd.h>
-
-int access( const char * path, int amode );
-path
-The path to the file or directory that you want to access.
-amode
-The access mode you want to check. This must be either:
-F_OK -- test for file existence.
-or a bitwise ORing of the following access permissions to be checked, as defined in the header <unistd.h>:
-
-R_OK -- test for read permission.
-W_OK -- test for write permission.
-X_OK -- for a directory, test for search permission. Otherwise, test for execute permissio
-----------------------
-The dup() system call creates a copy of a file descriptor.
-
-It uses the lowest-numbered unused descriptor for the new descriptor.
-If the copy is successfully created, then the original and copy file descriptors may be used interchangeably.
-They both refer to the same open file description and thus share file offset and file status flags.
+The access() function che thus share file offset and file status flags.
 Syntax:
-
-int dup(int oldfd);
-oldfd: old file descriptor whose copy is to be created.
-------------------------
-The dup2() system call is similar to dup() but the basic difference between them is that instead of using the lowest-numbered unused file descriptor, it uses the descriptor number specified by the user.
-Syntax:
-
-int dup2(int oldfd, int newfd);
-oldfd: old file descriptor
-newfd new file descriptor which is used by dup2() to create a copy.
---------------------------
-#include <unistd.h>
-
-       int execve(const char *pathname, char *const _Nullable argv[],
-                  char *const _Nullable envp[]);
-DESCRIPTION         top
-       execve() executes the program referred to by pathname.  This
-       causes the program that is currently being run by the calling
-       process to be replaced with a new program, with newly initialized
+ program, with newly initialized
        stack, heap, and (initialized and uninitialized) data segments.
 ----------------------------
 The Fork system call is used for creating a new process in Linux, and Unix systems, which is called the child process, which runs concurrently with the process that makes the fork() call (parent process). After a new child process is created, both processes will execute the next instruction following the fork() system call.
 
-The child process uses the same pc(program counter), same CPU registers, and same open files which use in the parent process. It takes no parameters and returns an integer value.
+ 
+ fda
+ dfa
+ df
+ asd
+ fa
+ sdf
+ asd
+ fa
+ sdf
+ asd
+ f
+ asd
+ fa
+ sd
+ fess uses the same pc(program counter), same CPU registers, and same open files which use in the parent process. It takes no parameters and returns an integer value.
 
-Below are different values returned by fork().
-
-Negative Value: The creation of a child process was unsuccessful.
-Zero: Returned to the newly created child process.
-Positive value: Returned to parent or caller. The value contains the process ID of the newly created child process.
-----------------------------
-Function: int unlink (const char *filename)
-Preliminary: | MT-Safe | AS-Safe | AC-Safe | See POSIX Safety Concepts.
-
+Below are diffe
 The unlink function deletes the file name filename. If this is a file’s sole name, the file itself is also deleted. (Actually, if any process has the file open when this happens, deletion is postponed until all processes have closed the file.)
 
 The function unlink is declared in the header file unistd.h.

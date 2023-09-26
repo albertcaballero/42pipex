@@ -6,11 +6,17 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:44:17 by alcaball          #+#    #+#             */
-/*   Updated: 2023/09/26 11:07:12 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/09/26 16:45:23 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	ft_error(int errcode)
+{
+	perror("Error");
+	exit(errcode);
+}
 
 void	ft_free(char **arr)
 {
@@ -36,6 +42,7 @@ t_comm	parse_comms(char *c1, char **paths)
 {
 	t_comm	cmd;
 	int		i;
+	int		error;
 
 	i = 0;
 	cmd.arg = ft_split(c1, ' ');
@@ -43,13 +50,12 @@ t_comm	parse_comms(char *c1, char **paths)
 	{
 		cmd.path = ft_strjoin(ft_strjoin(paths[i], "/"), cmd.arg[0]);
 		if (access(cmd.path, F_OK) == 0)
-			break ;
+			return (cmd);
 		else
-		{
-			free(cmd.path);
-			ft_error(errno);
-		}
+			error = errno;
 		i++;
 	}
+	free(cmd.path);
+	ft_error(errno);
 	return (cmd);
 }
