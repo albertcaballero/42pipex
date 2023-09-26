@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:44:17 by alcaball          #+#    #+#             */
-/*   Updated: 2023/09/19 17:25:57 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/09/26 11:07:12 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ t_comm	parse_comms(char *c1, char **paths)
 		if (access(cmd.path, F_OK) == 0)
 			break ;
 		else
+		{
 			free(cmd.path);
+			ft_error(errno);
+		}
 		i++;
 	}
 	return (cmd);

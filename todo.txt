@@ -126,3 +126,9 @@ Following is the declaration for perror() function.
 void perror(const char *str)
 Parameters
 str − This is the C string containing a custom message to be printed before the error message itself.
+
+
+fasdfa
+same
+Afs
+Analysisd
