@@ -7,20 +7,16 @@ int main () {
    fp = fopen("file.txt","r");
    if( fp == NULL ) {
       printf("Error: %s\n", strerror(errno));
-   }
-   
-   return(0);
-}
------------------
-The access() function che thus share file offset and file status flags.
-Syntax:
- program, with newly initialized
-       stack, heap, and (initialized and uninitialized) data segments.
-----------------------------
-The Fork system call is used for creating a new process in Linux, and Unix systems, which is called the child process, which runs concurrently with the process that makes the fork() call (parent process). After a new child process is created, both processes will execute the next instruction following the fork() system call.
+   }fasdfas
+   fasdfadf
+   asdf
+   asdf
 
- 
- fda
+
+   f1sa
+   diffe
+
+   fsfs
  dfa
  df
  asd

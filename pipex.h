@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:36:06 by albert            #+#    #+#             */
-/*   Updated: 2023/09/26 15:11:16 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/09/27 13:24:09 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ typedef struct s_commands
 
 size_t	ft_strlen(const char *str);
 int		ft_printf(const char *str, ...);
-int		test_file_acc(char *f1);
+void	test_file_acc(char *f1);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 t_comm	parse_comms(char *c1, char **paths);
 char	**ft_split(char const *s, char c);
 char	*ft_strjoin(char *s1, char *s2);
-void	ft_free(char **arr);
-void	ft_error(int errcode);
+void	ft_free(t_comm cmd);
+void	ft_error(int errcode, char *str);
 void	ft_putnbr_fd(int n, int fd);
 
 #endif
