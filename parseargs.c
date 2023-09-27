@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:44:17 by alcaball          #+#    #+#             */
-/*   Updated: 2023/09/27 14:01:06 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/09/27 15:08:25 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_comm	parse_comms(char *c1, char **paths)
 		temp = ft_strjoin(paths[i], "/");
 		cmd.path = ft_strjoin(temp, cmd.arg[0]);
 		free (temp);
-		if (access(cmd.path, X_OK) == 0)
+		if (access(cmd.path, R_OK) == 0)
 		{
 			free(paths[i]);
 			return (cmd);
