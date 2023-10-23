@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:35:29 by albert            #+#    #+#             */
-/*   Updated: 2023/09/27 15:01:33 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:49:22 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,16 @@ int	main(int argc, char **argv, char **envp)
 	char	**paths;
 
 	if (argc != 5)
-		return (write(2, "Error: Not enough arguments\n", 29));
+		return (write(2, "Error: Wrong argument count\n", 28));
 	test_file_acc(argv[1]);
 	f[0] = open(argv[1], O_RDONLY);
 	f[1] = open(argv[argc - 1], O_RDWR | O_CREAT, 0644);
 	if (f[0] == -1 || f[1] == -1)
 		ft_error(errno, argv[1]);
-	paths = ft_split(ft_substr(envp[10], 5, ft_strlen(envp[10]) - 5), ':');
+	paths = ft_split(ft_substr(envp[12], 5, ft_strlen(envp[12]) - 5), ':');
 	cmd1 = parse_comms(argv[2], paths);
-	cmd2 = parse_comms(argv[argc - 2], paths);
+	cmd2 = parse_comms(argv[3], paths);
+	//ft_free(paths);
 	pipex(f, cmd1, cmd2, envp);
 	ft_free(cmd1);
 	ft_free(cmd2);
