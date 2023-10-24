@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:44:17 by alcaball          #+#    #+#             */
-/*   Updated: 2023/10/24 13:02:17 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/10/24 14:50:49 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,11 @@ t_comm	parse_comms(char *c1, char **paths)
 
 	i = 0;
 	cmd.arg = ft_split(c1, ' ');
+	if (access(cmd.arg[0], R_OK) == 0)
+	{
+		cmd.path = cmd.arg[0];
+		return (cmd);
+	}
 	while (paths[i] != NULL)
 	{
 		temp = ft_strjoin(paths[i], "/");

@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:35:29 by albert            #+#    #+#             */
-/*   Updated: 2023/10/24 12:27:12 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/10/24 14:58:18 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,7 @@ int	main(int argc, char **argv, char **envp)
 	cmd2 = parse_comms(argv[3], paths);
 	free(environment);
 	pipex(f, cmd1, cmd2, envp);
-	ft_free(cmd1);
-	ft_free(cmd2);
+	// ft_free(cmd1); solo queda hacer free cuando argv ya es un absolute path
+	// ft_free(cmd2);
 	exit(EXIT_SUCCESS);
 }
-
-/*
-https://reactive.so/post/42-a-comprehensive-guide-to-pipex
-https://csnotes.medium.com/pipex-tutorial-42-project-4469f5dd5901 
-*/
