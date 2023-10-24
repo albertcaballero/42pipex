@@ -16,7 +16,7 @@ SRC = pipex.c parseargs.c
 all: makelib $(NAME)
 
 $(NAME): $(LIBRARY) Makefile $(SRC) libft/libft.a
-	@$(CC) $(CFLAGS) $(SRC) -L./libft -lft -L./printf -lftprintf -o $(NAME)
+	@$(CC) $(CFLAGS) $(SRC) -L./libft -lft -L./printf -lftprintf -o $(NAME) #-fsanitize="address,undefined" -g
 	@printf "${PURPLE}== PIPEX COMPILED SUCCESSFULLY ==\n${NC}"
 
 makelib:

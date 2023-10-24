@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:44:17 by alcaball          #+#    #+#             */
-/*   Updated: 2023/10/23 13:07:44 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/10/24 13:02:17 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,18 @@
 void	ft_error(int errcode, char	*str)
 {
 	if (errcode > 255)
-		ft_printf("Bash: %s: command not found\n", str);
+	{
+		ft_putstr_fd("Bash: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": command not found\n", 2);
+	}
 	else if (str)
-		ft_printf("Bash: %s: %s\n", str, strerror(errcode));
+	{
+		ft_putstr_fd("Bash: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd(strerror(errcode), 2);
+	}
 	else
 		perror("bash");
 	exit(errcode);
@@ -50,8 +59,6 @@ t_comm	parse_comms(char *c1, char **paths)
 	char	*temp;
 
 	i = 0;
-	if (c1[0] == 0)
-		ft_error(256, ""); //segfault  with command=="   "
 	cmd.arg = ft_split(c1, ' ');
 	while (paths[i] != NULL)
 	{
@@ -65,6 +72,5 @@ t_comm	parse_comms(char *c1, char **paths)
 	}
 	free(paths[i]);
 	ft_error(256, cmd.arg[0]);
-	ft_free(cmd); //no llega porque fterror hace exit
 	return (cmd);
 }
