@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:44:17 by alcaball          #+#    #+#             */
-/*   Updated: 2023/10/24 14:50:49 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/10/25 11:18:20 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_error(int errcode, char	*str)
 {
-	if (errcode > 255)
+	if (errcode == 127)
 	{
 		ft_putstr_fd("Bash: ", 2);
 		ft_putstr_fd(str, 2);
@@ -76,6 +76,6 @@ t_comm	parse_comms(char *c1, char **paths)
 		free(cmd.path);
 	}
 	free(paths[i]);
-	ft_error(256, cmd.arg[0]);
+	ft_error(127, cmd.arg[0]);
 	return (cmd);
 }
