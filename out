@@ -1,5 +1,4 @@
 Makefile
-goes
 libft
 out
 parseargs.c
