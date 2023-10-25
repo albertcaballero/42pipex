@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:35:29 by albert            #+#    #+#             */
-/*   Updated: 2023/10/25 10:59:29 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/10/25 14:04:14 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,17 +91,20 @@ int	main(int argc, char **argv, char **envp)
 	char	*environment;
 
 	if (argc != 5)
-		return (write(2, "Error: Wrong argument count\n", 28));
+		return (write(2, "Error: Wrong argument count\n", 28), 1);
 	test_file_acc(argv[1]);
 	f[0] = open(argv[1], O_RDONLY);
-	f[1] = open(argv[argc - 1], O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (f[0] == -1 || f[1] == -1)
+	if (f[0] == -1)
 		ft_error(errno, argv[1]);
-	environment = ft_substr(envp[12], 5, ft_strlen(envp[12]) - 5);
+	f[1] = open(argv[4], O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (f[1] == -1)
+		ft_error(errno, argv[4]);
+	environment = ft_substr(envp[12], 5, ft_strlen(envp[12]) - 5); //hay que hacer un strnstr the PATH en ENVP
 	paths = ft_split(environment, ':');
 	cmd1 = parse_comms(argv[2], paths);
 	cmd2 = parse_comms(argv[3], paths);
 	free(environment);
+	ft_free_split(paths);
 	pipex(f, cmd1, cmd2, envp);
 	exit(EXIT_SUCCESS);
 }
