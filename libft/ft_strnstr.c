@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 17:33:32 by alcaball          #+#    #+#             */
-/*   Updated: 2023/05/30 17:11:16 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/10/25 15:08:01 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_strnstr(const char *hayst, const char *need, size_t len)
 	{
 		j = 0;
 		if (hayst[i] == need[j])
-		{
+		{	
 			while (hayst[i + j] == need[j] && need[j] != '\0' && i + j < len)
 			{
 				if (need [j + 1] == '\0')

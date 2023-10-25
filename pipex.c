@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:35:29 by albert            #+#    #+#             */
-/*   Updated: 2023/10/25 14:04:14 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:08:23 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ void	pipex(int *f, t_comm cmd1, t_comm cmd2, char **envp)
 	close (pipes[1]);
 	close(f[0]);
 	close(f[1]);
-	if (waitpid(sig2, &status, 0) == -1)
-		ft_error(errno, NULL);
+	waitpid(sig2, &status, 0);
+	if (WEXITSTATUS(status) != 0)
+		ft_error(WEXITSTATUS(status), NULL);
 }
 
 void	ft_free_split(char **arr)
@@ -86,24 +87,22 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_comm	cmd1;
 	t_comm	cmd2;
+	int		ret;
 	int		f[2];
 	char	**paths;
-	char	*environment;
 
 	if (argc != 5)
 		return (write(2, "Error: Wrong argument count\n", 28), 1);
-	test_file_acc(argv[1]);
+	ret = access(argv[1], F_OK);
 	f[0] = open(argv[1], O_RDONLY);
-	if (f[0] == -1)
-		ft_error(errno, argv[1]);
 	f[1] = open(argv[4], O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (f[0] == -1 || ret < 0)
+		ft_error(1, argv[1]);
 	if (f[1] == -1)
-		ft_error(errno, argv[4]);
-	environment = ft_substr(envp[12], 5, ft_strlen(envp[12]) - 5); //hay que hacer un strnstr the PATH en ENVP
-	paths = ft_split(environment, ':');
+		ft_error(1, argv[4]);
+	paths = check_path_var(envp);
 	cmd1 = parse_comms(argv[2], paths);
 	cmd2 = parse_comms(argv[3], paths);
-	free(environment);
 	ft_free_split(paths);
 	pipex(f, cmd1, cmd2, envp);
 	exit(EXIT_SUCCESS);

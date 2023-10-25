@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:44:17 by alcaball          #+#    #+#             */
-/*   Updated: 2023/10/25 11:18:20 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/10/25 16:53:20 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ void	ft_error(int errcode, char	*str)
 	}
 	else
 		perror("bash");
-	exit(errcode);
+	if (errcode != 0)
+		exit(errcode);
+	else
+		exit(EXIT_FAILURE);
 }
 
 void	ft_free(t_comm cmd)
@@ -46,10 +49,24 @@ void	ft_free(t_comm cmd)
 	free (cmd.arg);
 }
 
-void	test_file_acc(char *f1)
+char	**check_path_var(char **envp)
 {
-	if (access(f1, F_OK) < 0)
-		ft_error (errno, f1);
+	int		i;
+	int		j;
+	char	**paths;
+	char	*environment;
+
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		if (ft_strnstr(envp[i], "PATH", 4) != NULL)
+			j = i;
+		i++;
+	}
+	environment = ft_substr(envp[j], 5, ft_strlen(envp[j]) - 5);
+	paths = ft_split(environment, ':');
+	free(environment);
+	return (paths);
 }
 
 t_comm	parse_comms(char *c1, char **paths)
@@ -75,7 +92,7 @@ t_comm	parse_comms(char *c1, char **paths)
 		i++;
 		free(cmd.path);
 	}
-	free(paths[i]);
+	ft_free_split(paths);
 	ft_error(127, cmd.arg[0]);
 	return (cmd);
 }
