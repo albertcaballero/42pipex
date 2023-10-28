@@ -6,47 +6,37 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:44:17 by alcaball          #+#    #+#             */
-/*   Updated: 2023/10/25 16:53:20 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/10/28 14:26:10 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ft_error(int errcode, char	*str)
+void	ft_error(int code, char *str)
 {
-	if (errcode == 127)
+	if (code == 127)
 	{
-		ft_putstr_fd("Bash: ", 2);
+		ft_putstr_fd("Pipex: ", 2);
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd(": command not found\n", 2);
 	}
+	else if (code == 404)
+	{
+		ft_putstr_fd("Pipex: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": no such file or directory\n", 2);
+		code = 1;
+	}
 	else if (str)
 	{
-		ft_putstr_fd("Bash: ", 2);
+		ft_putstr_fd("Pipex: ", 2);
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd(": ", 2);
-		ft_putendl_fd(strerror(errcode), 2);
+		ft_putendl_fd(strerror(code), 2);
 	}
 	else
-		perror("bash");
-	if (errcode != 0)
-		exit(errcode);
-	else
-		exit(EXIT_FAILURE);
-}
-
-void	ft_free(t_comm cmd)
-{
-	int	i;
-
-	i = 0;
-	free(cmd.path);
-	while (cmd.arg[i])
-	{
-		free(cmd.arg[i]);
-		i++;
-	}
-	free (cmd.arg);
+		perror("Pipex");
+	exit(code);
 }
 
 char	**check_path_var(char **envp)
@@ -67,6 +57,14 @@ char	**check_path_var(char **envp)
 	paths = ft_split(environment, ':');
 	free(environment);
 	return (paths);
+}
+
+void	ft_free_cmd(t_comm *cmds)
+{
+	free(cmds[0].path);
+	free(cmds[1].path);
+	ft_free_split(cmds[0].arg);
+	ft_free_split(cmds[1].arg);
 }
 
 t_comm	parse_comms(char *c1, char **paths)
@@ -92,7 +90,5 @@ t_comm	parse_comms(char *c1, char **paths)
 		i++;
 		free(cmd.path);
 	}
-	ft_free_split(paths);
-	ft_error(127, cmd.arg[0]);
 	return (cmd);
 }

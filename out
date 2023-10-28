@@ -1,0 +1,8 @@
+Makefile
+libft
+out
+parseargs.c
+pipex
+pipex.c
+pipex.h
+printf
