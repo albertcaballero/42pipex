@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipexbonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:35:29 by albert            #+#    #+#             */
-/*   Updated: 2023/10/28 14:36:49 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/10/28 15:05:23 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	child2(t_fd f2, t_comm cmd2, int *pipes, char **envp)
 
 void	pipex(t_fd *f, t_comm *cmd, char **envp)
 {
-	pid_t	sig;
-	pid_t	sig2;
+	pid_t	sig; //https://stackoverflow.com/questions/67161510/forking-and-pipe-processes-with-loop-in-c
+	pid_t	sig2; //https://www.youtube.com/watch?v=VzCawLzITh0 
 	int		pipes[2];
 	int		status;
 
