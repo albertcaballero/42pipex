@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albert <albert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:36:06 by albert            #+#    #+#             */
-/*   Updated: 2023/10/28 13:43:13 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/11/26 12:53:29 by albert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,25 @@
 # include <stdio.h>
 # include <stdlib.h>
 
+# define NOFILE 404
+# define NOREAD 403
+# define NOWRITE 402
+# define NOXECUTE 126
+# define NOCOMMAND 127
+
 typedef struct s_commands
 {
 	char	*path;
 	char	**arg;
+	char	*name;
+	int		perm;
 }	t_comm;
 
 typedef struct s_fds
 {
 	int		fd;
 	char	*name;
+	int		perm;
 }	t_fd;
 
 size_t	ft_strlen(const char *str);
@@ -48,5 +57,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	ft_free_split(char **arr);
 void	ft_free_cmd(t_comm *cmds);
+void	check_cmd_permissions(t_comm *cmd);
+void	check_file_permissions(t_fd *fd);
 
 #endif

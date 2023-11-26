@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albert <albert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:35:29 by albert            #+#    #+#             */
-/*   Updated: 2023/10/28 14:36:49 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/11/26 12:57:17 by albert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@ void	child(t_fd f1, t_comm cmd1, int *pipes, char **envp)
 	int	ret;
 
 	close (pipes[0]);
+	check_file_permissions(&f1);
+	if (f1.perm != 0)
+		ft_error(f1.perm, f1.name);
+	check_cmd_permissions(&cmd1);
+	if (cmd1.perm != 0)
+		ft_error(cmd1.perm, cmd1.name);
 	if (dup2(f1.fd, STDIN_FILENO) < 0)
 		ft_error(404, f1.name);
 	if (dup2(pipes[1], STDOUT_FILENO) < 0)
@@ -32,6 +38,12 @@ void	child2(t_fd f2, t_comm cmd2, int *pipes, char **envp)
 	int	ret;
 
 	close (pipes[1]);
+	check_file_permissions(&f2);
+	if (f2.perm != 0)
+		ft_error(f2.perm, f2.name);
+	check_cmd_permissions(&cmd2);
+	if (cmd2.perm != 0)
+		ft_error(cmd2.perm, cmd2.name);
 	if (dup2(pipes[0], STDIN_FILENO) < 0)
 		ft_error(404, f2.name);
 	if (dup2(f2.fd, STDOUT_FILENO) < 0)
@@ -86,15 +98,11 @@ void	ft_free_split(char **arr)
 int	main(int argc, char **argv, char **envp)
 {
 	t_comm	cmd[2];
-	int		ret;
 	t_fd	fd[2];
 	char	**paths;
 
-	if (argc != 5)
-		return (write(2, "Error: Wrong argument count\n", 28), 1);
 	fd[0].name = argv[1];
-	fd[1].name = argv[4];
-	ret = access(fd[0].name, F_OK);
+	fd[1].name = argv[argc - 1];
 	fd[0].fd = open(fd[0].name, O_RDONLY);
 	fd[1].fd = open(fd[1].name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	paths = check_path_var(envp);

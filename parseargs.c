@@ -3,40 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   parseargs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albert <albert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:44:17 by alcaball          #+#    #+#             */
-/*   Updated: 2023/10/28 14:26:10 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/11/26 12:50:21 by albert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ft_error(int code, char *str)
+void	check_cmd_permissions(t_comm *cmd)
 {
-	if (code == 127)
-	{
-		ft_putstr_fd("Pipex: ", 2);
-		ft_putstr_fd(str, 2);
-		ft_putstr_fd(": command not found\n", 2);
-	}
-	else if (code == 404)
-	{
-		ft_putstr_fd("Pipex: ", 2);
-		ft_putstr_fd(str, 2);
-		ft_putstr_fd(": no such file or directory\n", 2);
-		code = 1;
-	}
-	else if (str)
-	{
-		ft_putstr_fd("Pipex: ", 2);
-		ft_putstr_fd(str, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putendl_fd(strerror(code), 2);
-	}
-	else
-		perror("Pipex");
-	exit(code);
+	cmd->perm = 0;
+	if (access(cmd->path, F_OK) < 0)
+		cmd->perm = NOCOMMAND;
+	else if (access(cmd->path, X_OK) < 0)
+		cmd->perm = NOXECUTE;
+}
+
+void	check_file_permissions(t_fd *fd)
+{
+	fd->perm = 0;
+	if (access(fd->name, F_OK) < 0)
+		fd->perm = NOFILE;
+	else if (access(fd->name, R_OK) < 0)
+		fd->perm = NOREAD;
+	else if (access(fd->name, W_OK) < 0)
+		fd->perm = NOWRITE;
 }
 
 char	**check_path_var(char **envp)

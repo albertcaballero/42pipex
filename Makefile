@@ -12,19 +12,13 @@ PURPLE  =   \033[38;5;93m
 PINK	=	\033[38;5;219m
 NC      =   \033[0m
 
-SRC = pipex.c parseargs.c
-
-BONUSRC = pipexbonus.c parseargs.c
+SRC = pipex.c parseargs.c err_handling.c
 
 all: makelib $(NAME)
 
 $(NAME): $(LIBRARY) Makefile $(SRC) libft/libft.a
 	@$(CC) $(CFLAGS) $(SRC) -L./libft -lft -L./printf -lftprintf -o $(NAME) #-fsanitize="address,undefined" -g
 	@printf "${PURPLE}== PIPEX COMPILED SUCCESSFULLY ==\n${NC}"
-
-$(NAME): $(LIBRARY) Makefile $(BONUSRC) libft/libft.a
-	@$(CC) $(CFLAGS) $(BONUSRC) -L./libft -lft -L./printf -lftprintf -o $(NAME) #-fsanitize="address,undefined" -g
-	@printf "${PURPLE}== BONUS COMPILED SUCCESSFULLY ==\n${NC}"
 
 makelib:
 	@$(MAKE) -C ./libft bonus --no-print-directory -silent
