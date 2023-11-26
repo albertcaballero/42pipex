@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: albert <albert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:35:29 by albert            #+#    #+#             */
-/*   Updated: 2023/11/26 13:25:47 by albert           ###   ########.fr       */
+/*   Updated: 2023/11/26 13:41:05 by albert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,29 +55,28 @@ void	child2(t_fd f2, t_comm cmd2, int *pipes, char **envp)
 		ft_error(127, cmd2.arg[0]);
 }
 
-void	pipex(t_fd *f, t_comm *cmd, char **envp)
+void	pipex(t_pipex key, t_comm *cmd, char **envp)
 {
-	pid_t	sig;
-	pid_t	sig2;
-	int		pipes[2];
+	pid_t	sig[key.argc]; //another VSA
+	int		pipes[key.argc][2]; //another VSA
 	int		status;
 
-	pipe (pipes);
-	sig = fork();
-	if (sig < 0)
+	pipe (pipes[0]);
+	sig[0] = fork();
+	if (sig[0] < 0)
 		ft_error(errno, NULL);
-	else if (sig == 0)
-		child(f[0], cmd[0], pipes, envp);
-	sig2 = fork();
-	if (sig2 < 0)
+	else if (sig[0] == 0)
+		child(key.fd[0], cmd[0], pipes[0], envp);
+	sig[1] = fork();
+	if (sig[1] < 0)
 		ft_error(errno, NULL);
-	else if (sig2 == 0)
-		child2(f[1], cmd[1], pipes, envp);
+	else if (sig[1] == 0)
+		child2(key.fd[1], cmd[1], pipes[0], envp);
 	close (pipes[0]);
 	close (pipes[1]);
-	close(f[0].fd);
-	close(f[1].fd);
-	waitpid(sig2, &status, 0);
+	close(key.fd[0].fd);
+	close(key.fd[1].fd);
+	waitpid(sig[1], &status, 0);
 	if (WEXITSTATUS(status) != 0)
 		exit(WEXITSTATUS(status));
 }
@@ -97,21 +96,24 @@ void	ft_free_split(char **arr)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_comm	cmd[2];
-	t_fd	fd[2];
+	t_comm	cmd[argc - 3]; //idk if it counts as a VSA??
+	t_pipex	key;
 	char	**paths;
 
-	if (argc != 5)
+	if (argc < 5)
 		return(write(2, "Pipex: Wrong Argument Count\n", 28), 1);
-	fd[0].name = argv[1];
-	fd[1].name = argv[argc - 1];
-	fd[0].fd = open(fd[0].name, O_RDONLY);
-	fd[1].fd = open(fd[1].name, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	key.argc = argc;
+	if (ft_strncmp(argv[1], "here_doc", 9) == 0)
+		funct_here_doc(); //no existe aun :)
+	key.fd[0].name = argv[1];
+	key.fd[1].name = argv[argc - 1];
+	key.fd[0].fd = open(key.fd[0].name, O_RDONLY);
+	key.fd[1].fd = open(key.fd[1].name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	paths = check_path_var(envp);
 	cmd[0] = parse_comms(argv[2], paths);
 	cmd[1] = parse_comms(argv[3], paths);
 	ft_free_split(paths);
-	pipex(fd, cmd, envp);
+	pipex(key, cmd, envp);
 	ft_free_split(cmd[0].arg);
 	ft_free_split(cmd[1].arg);
 	exit(EXIT_SUCCESS);

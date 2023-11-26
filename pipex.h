@@ -6,7 +6,7 @@
 /*   By: albert <albert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:36:06 by albert            #+#    #+#             */
-/*   Updated: 2023/11/26 12:53:29 by albert           ###   ########.fr       */
+/*   Updated: 2023/11/26 13:31:56 by albert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ typedef struct s_fds
 	char	*name;
 	int		perm;
 }	t_fd;
+
+typedef struct s_pipex
+{
+	int		argc;
+	t_fd	fd[2];
+}	t_pipex;
 
 size_t	ft_strlen(const char *str);
 int		ft_printf(const char *str, ...);
