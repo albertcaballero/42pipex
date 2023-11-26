@@ -6,7 +6,7 @@
 /*   By: albert <albert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:44:17 by alcaball          #+#    #+#             */
-/*   Updated: 2023/11/26 12:50:21 by albert           ###   ########.fr       */
+/*   Updated: 2023/11/26 13:16:12 by albert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ t_comm	parse_comms(char *c1, char **paths)
 
 	i = 0;
 	cmd.arg = ft_split(c1, ' ');
+	cmd.name = cmd.arg[0];
 	if (access(cmd.arg[0], R_OK) == 0)
 	{
 		cmd.path = cmd.arg[0];
