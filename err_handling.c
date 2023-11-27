@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   err_handling.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albert <albert@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 12:37:29 by albert            #+#    #+#             */
-/*   Updated: 2023/11/26 12:56:49 by albert           ###   ########.fr       */
+/*   Updated: 2023/11/27 11:52:49 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,19 @@ void	ft_error_file(int code, char *str)
 	{
 		ft_putstr_fd("Pipex: ", 2);
 		ft_putstr_fd(str, 2);
-		ft_putstr_fd(": no such file or directory\n", 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 	}
 }
 
 void	ft_error(int code, char *str)
 {
-	if (code == 127)
+	if (code == NOCOMMAND)
 	{
 		ft_putstr_fd("Pipex: ", 2);
 		ft_putstr_fd(str, 2);
-		ft_putstr_fd(": command not found\n", 2);
+		ft_putstr_fd(": Command not found\n", 2);
 	}
-	else if (code > 400 || code == 126)
+	else if (code > 400 || code == NOXECUTE)
 	{
 		ft_error_file(code, str);
 		if (code != 126)
