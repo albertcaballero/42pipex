@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parseargs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albert <albert@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:44:17 by alcaball          #+#    #+#             */
-/*   Updated: 2023/11/26 13:16:12 by albert           ###   ########.fr       */
+/*   Updated: 2023/11/27 14:56:35 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,14 @@ char	**check_path_var(char **envp)
 			j = i;
 		i++;
 	}
-	environment = ft_substr(envp[j], 5, ft_strlen(envp[j]) - 5);
-	paths = ft_split(environment, ':');
-	free(environment);
+	if (envp[i] == NULL)
+		ft_error(1, "No PATH");
+	else
+	{
+		environment = ft_substr(envp[j], 5, ft_strlen(envp[j]) - 5);
+		paths = ft_split(environment, ':');
+		free(environment);
+	}
 	return (paths);
 }
 
