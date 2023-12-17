@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albert <albert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:35:29 by albert            #+#    #+#             */
-/*   Updated: 2023/11/27 12:09:21 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/12/17 01:20:33 by albert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,28 +55,50 @@ void	child2(t_fd f2, t_comm cmd2, int *pipes, char **envp)
 		ft_error(127, cmd2.arg[0]);
 }
 
-void	pipex(t_pipex key, t_comm *cmd, char **envp)
+void	close_pipes_fds(int **pipes, t_pipex key)
 {
-	pid_t	sig[key.argc]; //another VSA
-	int		pipes[key.argc][2]; //another VSA
-	int		status;
+	int	i;
 
-	pipe (pipes[0]);
-	sig[0] = fork();
-	if (sig[0] < 0)
-		ft_error(errno, NULL);
-	else if (sig[0] == 0)
-		child(key.fd[0], cmd[0], pipes[0], envp);
-	sig[1] = fork();
-	if (sig[1] < 0)
-		ft_error(errno, NULL);
-	else if (sig[1] == 0)
-		child2(key.fd[1], cmd[1], pipes[0], envp);
-	close (pipes[0]);
-	close (pipes[1]);
+	i = 0;
+	while (i < key.argc - 2)
+	{
+		close(pipes[i][0]);
+		close(pipes[i][1]);
+		i++;
+	}
 	close(key.fd[0].fd);
 	close(key.fd[1].fd);
-	waitpid(sig[1], &status, 0);
+}
+
+void	pipex(t_pipex key, t_comm *cmd, char **envp)
+{
+	pid_t	*sig;
+	int		**pipes;
+	int		status;
+	int		i;
+
+	i = 0;
+	sig = malloc (sizeof(pid_t) * (key.argc - 2));
+	pipes = malloc(sizeof(int *) * (key.argc - 2));
+	while (i < key.argc - 2)
+	{
+		pipes[i] = malloc (sizeof(int) * 2);
+		pipe (pipes[i]);
+		i++;
+	}
+	i = 0;
+	while (i < key.argc - 2)
+	{
+		sig[i] = fork();
+		if (sig[i] < 0)
+			ft_error(errno, NULL);
+		else if (sig[i] == 0)
+			child(key.fd[0], cmd[0], pipes[0], envp);
+		i++;
+	}
+	//maybe last child needs special treatment?
+	close_pipes_fds(pipes, key);
+	waitpid(sig[key.argc - 2], &status, 0);
 	if (WEXITSTATUS(status) != 0)
 		exit(WEXITSTATUS(status));
 }
@@ -96,9 +118,10 @@ void	ft_free_split(char **arr)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_comm	cmd[argc - 3]; //idk if it counts as a VSA??
+	t_comm	*cmd;
 	t_pipex	key;
 	char	**paths;
+	int		i;
 
 	if (argc < 5)
 		return(write(2, "Pipex: Wrong Argument Count\n", 28), 1);
@@ -110,11 +133,17 @@ int	main(int argc, char **argv, char **envp)
 	key.fd[0].fd = open(key.fd[0].name, O_RDONLY);
 	key.fd[1].fd = open(key.fd[1].name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	paths = check_path_var(envp);
-	cmd[0] = parse_comms(argv[2], paths);
-	cmd[1] = parse_comms(argv[3], paths);
+	i = 0;
+	cmd = malloc(sizeof(*cmd) * (argc - 3));
+	while (i < argc - 3)
+	{
+		cmd[i] = parse_comms(argv[i + 2], paths);
+		i++;
+	}
 	ft_free_split(paths);
 	pipex(key, cmd, envp);
-	ft_free_split(cmd[0].arg);
-	ft_free_split(cmd[1].arg);
+	i = 0;
+	while (i < argc - 3)
+		ft_free_split(cmd[i++].arg);
 	exit(EXIT_SUCCESS);
 }
