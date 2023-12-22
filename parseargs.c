@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:44:17 by alcaball          #+#    #+#             */
-/*   Updated: 2023/11/27 14:56:35 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/12/22 17:23:09 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char	**check_path_var(char **envp)
 	char	*environment;
 
 	i = 0;
+	paths = NULL;
 	while (envp[i] != NULL)
 	{
 		if (ft_strnstr(envp[i], "PATH", 4) != NULL)
