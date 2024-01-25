@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:44:17 by alcaball          #+#    #+#             */
-/*   Updated: 2023/12/22 17:23:09 by alcaball         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:16:00 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ char	**check_path_var(char **envp)
 			j = i;
 		i++;
 	}
-	if (envp[i] == NULL)
-		ft_error(1, "No PATH");
-	else
+	if (ft_strnstr(envp[j], "PATH", 4) != NULL)
 	{
 		environment = ft_substr(envp[j], 5, ft_strlen(envp[j]) - 5);
 		paths = ft_split(environment, ':');
@@ -58,12 +56,17 @@ char	**check_path_var(char **envp)
 	return (paths);
 }
 
-void	ft_free_cmd(t_comm *cmds)
+void	ft_free_cmd(t_comm *cmds, int count)
 {
-	free(cmds[0].path);
-	free(cmds[1].path);
-	ft_free_split(cmds[0].arg);
-	ft_free_split(cmds[1].arg);
+	int	i;
+
+	i = 0;
+	while (i < count)
+	{
+		free(cmds[i].path);
+		ft_free_split(cmds[i].arg);
+		i++;
+	}
 }
 
 t_comm	parse_comms(char *c1, char **paths)
@@ -75,7 +78,10 @@ t_comm	parse_comms(char *c1, char **paths)
 	i = 0;
 	cmd.arg = ft_split(c1, ' ');
 	cmd.name = cmd.arg[0];
-	if (access(cmd.arg[0], R_OK) == 0)
+	cmd.path = NULL;
+	if (paths == NULL)
+		return (cmd);
+	if (access(cmd.arg[0], R_OK) == 0 || c1[0] == '.')
 	{
 		cmd.path = cmd.arg[0];
 		return (cmd);

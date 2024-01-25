@@ -12,7 +12,7 @@ PURPLE  =   \033[38;5;93m
 PINK	=	\033[38;5;219m
 NC      =   \033[0m
 
-SRC = pipex.c parseargs.c err_handling.c
+SRC = pipex.c parseargs.c err_handling.c heredoc.c
 
 all: makelib $(NAME)
 

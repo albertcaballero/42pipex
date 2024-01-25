@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albert <albert@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:36:06 by albert            #+#    #+#             */
-/*   Updated: 2023/11/26 13:31:56 by albert           ###   ########.fr       */
+/*   Updated: 2024/01/25 13:19:46 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <errno.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include "libft/libft.h"
 
 # define NOFILE 404
 # define NOREAD 403
@@ -26,12 +27,16 @@
 # define NOXECUTE 126
 # define NOCOMMAND 127
 
+# define IN 1
+# define OUT 2
+
 typedef struct s_commands
 {
 	char	*path;
 	char	**arg;
 	char	*name;
 	int		perm;
+	int		id;
 }	t_comm;
 
 typedef struct s_fds
@@ -43,26 +48,16 @@ typedef struct s_fds
 
 typedef struct s_pipex
 {
-	int		argc;
+	int		cmdcont;
+	char	**env;
 	t_fd	fd[2];
 }	t_pipex;
 
-size_t	ft_strlen(const char *str);
-int		ft_printf(const char *str, ...);
 void	test_file_acc(char *f1);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
 t_comm	parse_comms(char *c1, char **paths);
-char	**ft_split(char const *s, char c);
-char	*ft_strjoin(char *s1, char *s2);
 void	ft_error(int errcode, char *str);
-void	ft_putnbr_fd(int n, int fd);
-void	ft_putstr_fd(char *s, int fd);
-void	ft_putendl_fd(char *s, int fd);
 char	**check_path_var(char **envp);
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-void	ft_free_split(char **arr);
-void	ft_free_cmd(t_comm *cmds);
+void	ft_free_cmd(t_comm *cmds, int count);
 void	check_cmd_permissions(t_comm *cmd);
 void	check_file_permissions(t_fd *fd);
 
