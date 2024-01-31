@@ -6,12 +6,12 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:15:23 by alcaball          #+#    #+#             */
-/*   Updated: 2023/05/30 17:09:53 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/11/27 10:21:07 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
+//duplicates a string
 char	*ft_strdup(const char *s1)
 {
 	int		i;
@@ -29,10 +29,3 @@ char	*ft_strdup(const char *s1)
 	arr[i] = 0;
 	return (arr);
 }
-/*
-int	main(void)
-{
-	char s1[] = "sumadre  a";
-	printf("1 is %s\n", ft_strdup(s1));
-	printf("2 is %s", strdup(s1));
-}//*/

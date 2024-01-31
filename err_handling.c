@@ -6,11 +6,21 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 12:37:29 by albert            #+#    #+#             */
-/*   Updated: 2024/01/25 11:40:11 by alcaball         ###   ########.fr       */
+/*   Updated: 2024/01/25 17:14:40 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	error_exit(t_comm cmd)
+{
+	if (cmd.arg[0] == NULL)
+		exit (0);
+	if (cmd.perm == NOCOMMAND && cmd.arg[0] != NULL)
+		ft_error(127, cmd.arg[0]);
+	if (cmd.perm == NOXECUTE)
+		ft_error(126, cmd.arg[0]);
+}
 
 void	ft_error_file(int code, char *str)
 {

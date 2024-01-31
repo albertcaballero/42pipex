@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 15:38:10 by alcaball          #+#    #+#             */
-/*   Updated: 2023/05/30 17:09:45 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/11/27 10:18:19 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	int	i;
-
-	i = ft_strlen((const char *) s);
-	write(fd, s, i);
+	write(fd, s, ft_strlen((const char *) s));
 	return ;
 }

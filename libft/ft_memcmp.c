@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 11:16:16 by alcaball          #+#    #+#             */
-/*   Updated: 2023/05/09 12:31:30 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/11/27 10:13:37 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,3 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 	}
 	return (0);
 }
-/*
-int	main(void)
-{
-	char s1[] = "maa";
-	char s2[] = "maa";
-	size_t n = 44;
-	printf("%d\n", memcmp(s1, s2, n));
-	printf("%d", ft_memcmp(s1, s2, n));
-	return(0);
-}
-//*/

@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:38:19 by alcaball          #+#    #+#             */
-/*   Updated: 2023/05/23 14:15:07 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/11/27 10:13:47 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,3 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	}
 	return (dst);
 }
-/*
-int	main(void)
-{
-	char dst[] = "lorem ipsum dolor sit a";
-	char src[] = "aaa";
-	size_t len = 8;
-	printf("%s\n", ft_memmove(dst, src, len));
-	printf("%s\n", memmove(dst, src, len));
-}//*/

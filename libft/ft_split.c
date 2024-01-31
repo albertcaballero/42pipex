@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:46:52 by alcaball          #+#    #+#             */
-/*   Updated: 2023/05/25 17:25:48 by alcaball         ###   ########.fr       */
+/*   Updated: 2024/01/15 18:06:18 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,13 @@ static char	*rmchar(char *s, char c, int a)
 	return (&s[j]);
 }
 
-void	*freefall(char **spl)
+void	*free_split(char **spl)
 {
 	int	i;
 
 	i = 0;
+	if (!spl)
+		return (NULL);
 	while (spl[i])
 	{
 		free(spl[i]);
@@ -84,6 +86,8 @@ char	**ft_split(char const *s, char c)
 	char	**spl;
 
 	m = 0;
+	if (!s || ft_strlen(s) == 0)
+		return (NULL);
 	count = cntwrd (s, c);
 	spl = (char **) malloc ((count + 1) * sizeof(char *));
 	if (!spl)
@@ -94,27 +98,10 @@ char	**ft_split(char const *s, char c)
 	{
 		spl[m] = ft_substr (s, 0, cntlen(s, c));
 		if (!spl)
-			return (freefall(spl));
+			return (free_split(spl));
 		s = rmchar ((char *) s, c, 2);
 		m++;
 	}
 	spl[m] = NULL;
 	return (spl);
 }
-
-/*
-int	main(void)
-{
-	char	*s = "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed"
-	char	c = ' ';
-	char	**m;
-	int		i = 0;
-
-	m = ft_split(s, c);
-	while (m[i] != NULL)
-	{
-		printf("%s\n", m[i]);
-		i++;
-	}
-	return (0);
-}//*/

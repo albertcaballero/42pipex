@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/01 12:12:09 by alcaball          #+#    #+#             */
-/*   Updated: 2023/06/09 13:43:22 by alcaball         ###   ########.fr       */
+/*   Created: 2023/07/12 13:30:50 by alcaball          #+#    #+#             */
+/*   Updated: 2024/01/15 14:18:18 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 500
+# endif
 
 # include <unistd.h>
-# include <stdarg.h>
-# include <stdio.h>
-# include <stddef.h>
+# include <stdlib.h>
+# include <limits.h>
+# include "../libft.h"
 
-int		ft_printf(const char *str, ...);
-int		ft_putnbr_fd(int n, int fd);
-int		ft_putchar_fd(char c, int fd);
-int		ft_putstr_fd(char *s, int fd);
+char	*get_next_line(int fd);
 size_t	ft_strlen(const char *str);
-int		porc(char id, va_list varg);
-int		ft_isneg(long n, int flag);
-int		ft_puthex(int num, int cse);
-int		ft_put_add(size_t ad);
-int		ft_putuns(unsigned int n);
+void	ft_putstr_fd(char *s, int fd);
+char	*ft_strjoin(char *s1, char *s2);
+char	*ft_substr(char *s, unsigned int start, size_t len);
+char	*freeall(char *s1, char *s2);
 
 #endif

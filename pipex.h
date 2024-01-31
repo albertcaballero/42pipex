@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:36:06 by albert            #+#    #+#             */
-/*   Updated: 2024/01/25 13:19:46 by alcaball         ###   ########.fr       */
+/*   Updated: 2024/01/25 17:15:13 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_pipex
 {
 	int		cmdcont;
 	char	**env;
+	int		f_here;
 	t_fd	fd[2];
 }	t_pipex;
 
@@ -60,5 +61,9 @@ char	**check_path_var(char **envp);
 void	ft_free_cmd(t_comm *cmds, int count);
 void	check_cmd_permissions(t_comm *cmd);
 void	check_file_permissions(t_fd *fd);
+int		write_heredoc(char *eof);
+void	error_exit(t_comm cmd);
+void	close_pipes_fds(int *pipes, t_pipex key);
+void	duptemp(int *stdtmp, int flag);
 
 #endif

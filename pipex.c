@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albert <albert@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:35:29 by albert            #+#    #+#             */
-/*   Updated: 2023/11/26 13:25:47 by albert           ###   ########.fr       */
+/*   Updated: 2024/01/25 17:19:42 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	main(int argc, char **argv, char **envp)
 	char	**paths;
 
 	if (argc != 5)
-		return(write(2, "Pipex: Wrong Argument Count\n", 28), 1);
+		return (write(2, "Pipex: Wrong Argument Count\n", 28), 1);
 	fd[0].name = argv[1];
 	fd[1].name = argv[argc - 1];
 	fd[0].fd = open(fd[0].name, O_RDONLY);

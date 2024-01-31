@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:44:17 by alcaball          #+#    #+#             */
-/*   Updated: 2024/01/25 13:16:00 by alcaball         ###   ########.fr       */
+/*   Updated: 2024/01/25 16:55:55 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	ft_free_cmd(t_comm *cmds, int count)
 	while (i < count)
 	{
 		free(cmds[i].path);
-		ft_free_split(cmds[i].arg);
+		free_split(cmds[i].arg);
 		i++;
 	}
 }

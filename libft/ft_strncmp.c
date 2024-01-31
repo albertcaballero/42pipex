@@ -6,12 +6,12 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:17:29 by alcaball          #+#    #+#             */
-/*   Updated: 2023/05/10 11:58:05 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/11/27 10:26:06 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
+//compares 2 strs at n length, returns 0 if they are equal
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t			i;
@@ -27,19 +27,5 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 			return (ps1[i] - ps2[i]);
 		i++;
 	}
-	if (s1[i] == s2[i])
-		return (0);
-	return (0);
+	return (s1[i] != s2[i]);
 }
-/*
-#include <stdio.h>
-#include <string.h>
-int	main(void)
-{
-	unsigned int	n = 80;
-	char s1[] = "\300";
-	char s2[] = "\0";
-	printf("original is %d\n", strncmp(s1, s2, n));
-	printf("yours is %d", ft_strncmp(s1, s2, n));
-	
-}//*/

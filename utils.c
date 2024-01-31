@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/02 15:25:40 by alcaball          #+#    #+#             */
-/*   Updated: 2023/11/27 10:23:36 by alcaball         ###   ########.fr       */
+/*   Created: 2024/01/25 17:13:42 by alcaball          #+#    #+#             */
+/*   Updated: 2024/01/25 17:19:07 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "pipex.h"
 
-size_t	ft_strlen(const char *str)
+void	close_pipes_fds(int *pipes, t_pipex key)
 {
-	size_t	i;
+	close(pipes[0]);
+	close(pipes[1]);
+	close(key.fd[0].fd);
+	close(key.fd[1].fd);
+}
 
-	i = 0;
-	if (!str || str == NULL)
-		return (0);
-	while (str[i] != 0)
-		i++;
-	return (i);
+void	duptemp(int *stdtmp, int flag)
+{
+	if (flag == IN)
+	{
+		stdtmp[0] = dup(STDIN_FILENO);
+		stdtmp[1] = dup(STDOUT_FILENO);
+	}
+	if (flag == OUT)
+	{
+		dup2(stdtmp[0], STDIN_FILENO);
+		dup2(stdtmp[1], STDOUT_FILENO);
+		close(stdtmp[0]);
+		close(stdtmp[1]);
+	}
 }

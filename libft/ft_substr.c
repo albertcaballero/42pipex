@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 15:13:59 by alcaball          #+#    #+#             */
-/*   Updated: 2023/05/30 17:11:57 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/11/27 10:35:32 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (!sub)
 		return (NULL);
 	while (j < len)
-	{
-		sub[j] = s[stt];
-		stt++;
-		j++;
-	}
-	sub[j] = '\0';
+		sub[j++] = s[stt++];
+	sub[j] = 0;
 	return (sub);
 }
-/*
-int	main(void)
-{
-	char s[] = "hola";
-	unsigned int start = 0;
-	size_t len = 18446744073709551615;
-//	printf("1 is %s\n", substr(s, start, len));
-	printf("2 is %s", ft_substr(s, start, len));
-}//*/

@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 13:16:37 by alcaball          #+#    #+#             */
-/*   Updated: 2023/07/27 16:55:13 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/11/27 10:08:38 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,3 @@ long	ft_atol(const char *str)
 	}
 	return (numb * flag);
 }
-/*
-int	main(void)
-{
-	char str[] = "546:5";
-
-	printf("1 is %d\n", ft_atoi(str));
-	printf("2 is %d\n", atoi(str));
-	return (0);
-}//*/

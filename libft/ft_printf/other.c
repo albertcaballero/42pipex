@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:46:18 by alcaball          #+#    #+#             */
-/*   Updated: 2023/06/09 15:32:04 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/12/02 11:29:46 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_putuns(unsigned int n)
 		nb *= -1;
 	ret = ft_isneg(nb, 2);
 	if (neg == 1)
-		if (ft_putchar_fd('-', 1) == -1)
+		if (int_putchar_fd('-', 1) == -1)
 			return (-1);
 	if (nb > 9)
 	{
@@ -35,7 +35,7 @@ int	ft_putuns(unsigned int n)
 			return (-1);
 	}
 	if (nb <= 9)
-		if (ft_putchar_fd(nb + '0', 1) == -1)
+		if (int_putchar_fd(nb + '0', 1) == -1)
 			return (-1);
 	return (ret + neg);
 }

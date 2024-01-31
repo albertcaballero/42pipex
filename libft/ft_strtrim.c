@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:05:58 by alcaball          #+#    #+#             */
-/*   Updated: 2023/05/30 17:11:45 by alcaball         ###   ########.fr       */
+/*   Updated: 2024/01/15 14:42:19 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,3 @@ char	*ft_strtrim(char const *s1, char const *set)
 		return (NULL);
 	return (s3);
 }
-/*
-int	main(void)
-{
-	char	s1[] = "      ";
-	char	set[] = " ";
-
-	printf("%s", ft_strtrim(s1, set));
-	return (0);
-}//*/

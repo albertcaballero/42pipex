@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:30:56 by alcaball          #+#    #+#             */
-/*   Updated: 2023/06/09 15:45:34 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/12/02 11:28:18 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ int	ft_puthex(int num, int cse)
 	}
 	if (unum <= 9)
 	{
-		if (ft_putchar_fd (unum + 48, 1) == -1)
+		if (int_putchar_fd (unum + 48, 1) == -1)
 			return (-1);
 	}
-	else if (unum > 9 && unum < 16 && cse == 1)
-		aux = ft_putchar_fd (unum + 55, 1);
-	else if (unum > 9 && unum < 16 && cse == 0)
-		aux = ft_putchar_fd (unum + 87, 1);
+	else if (unum > 9 && unum < 16 && cse == MAYUS)
+		aux = int_putchar_fd (unum + 55, 1);
+	else if (unum > 9 && unum < 16 && cse == MINUS)
+		aux = int_putchar_fd (unum + 87, 1);
 	if (aux == -1)
 		return (-1);
 	return (ret);
@@ -70,14 +70,14 @@ int	ft_puthexadd(size_t num, int cse)
 	}
 	if (num <= 9)
 	{
-		aux = ft_putchar_fd (num + 48, 1);
+		aux = int_putchar_fd (num + 48, 1);
 		if (aux == -1)
 			return (-1);
 	}
-	else if (num > 9 && num < 16 && cse == 1)
-		aux = ft_putchar_fd (num + 55, 1);
-	else if (num > 9 && num < 16 && cse == 0)
-		aux = ft_putchar_fd (num + 87, 1);
+	else if (num > 9 && num < 16 && cse == MAYUS)
+		aux = int_putchar_fd (num + 55, 1);
+	else if (num > 9 && num < 16 && cse == MINUS)
+		aux = int_putchar_fd (num + 87, 1);
 	if (aux == -1)
 		return (-1);
 	return (ret);
@@ -87,9 +87,9 @@ int	ft_put_add(size_t ad)
 {
 	int	ret;
 
-	if (ft_putstr_fd("0x", 1) == -1)
+	if (int_putstr_fd("0x", 1) == -1)
 		return (-1);
-	ret = ft_puthexadd(ad, 0);
+	ret = ft_puthexadd(ad, MINUS);
 	if (ret == -1)
 		return (-1);
 	return (ret + 2);

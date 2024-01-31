@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 17:33:32 by alcaball          #+#    #+#             */
-/*   Updated: 2023/10/28 11:04:41 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/11/27 10:29:21 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,3 @@ char	*ft_strnstr(const char *hayst, const char *need, size_t len)
 	}
 	return (0);
 }
-
-/*
-int	main(void)
-{
-	char	hay[] = "lorem ipsum dolor sit amet dolork";
-	char	need[] = "dolork";
-	size_t len = 15;
-
-	printf("1 is %s\n", ft_strnstr(hay, need, len));
-	printf("2 is %s", strnstr(hay, need, len));
-	return (0);
-}
-//*/

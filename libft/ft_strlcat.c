@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 11:10:08 by alcaball          #+#    #+#             */
-/*   Updated: 2023/05/30 17:10:16 by alcaball         ###   ########.fr       */
+/*   Updated: 2023/11/27 10:42:08 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ size_t	minlen(char *dst, size_t dstsize)
 	return (i);
 }
 
+//hell, do not use
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
 	size_t	i;
@@ -43,16 +44,3 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 		dst[i] = '\0';
 	return (aux + ft_strlen(src));
 }
-/*
-int	main(void)
-{
-	char dst[30] = "CCCCC";
-	char src[] = "AAAAAAAAA";
-	size_t dstsize = 15;
-
-	printf("Y is %lu\n", ft_strlcat(dst, src, -1));
-	ft_strlcat (dst, src, -1);
-	printf("%s", dst);
-//	printf("O is %s %lu\n", dst, strlcat(dst, src, -1));
-	return (0);
-}//*/

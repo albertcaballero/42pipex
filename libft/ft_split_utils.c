@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_split_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/02 15:25:40 by alcaball          #+#    #+#             */
-/*   Updated: 2023/11/27 10:23:36 by alcaball         ###   ########.fr       */
+/*   Created: 2024/01/15 10:31:46 by alcaball          #+#    #+#             */
+/*   Updated: 2024/01/15 10:33:24 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *str)
+int	ft_splitlen(char **spl)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	if (!str || str == NULL)
+	if (!spl)
 		return (0);
-	while (str[i] != 0)
+	while (spl[i] != NULL)
 		i++;
 	return (i);
 }

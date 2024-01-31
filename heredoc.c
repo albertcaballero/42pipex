@@ -6,28 +6,47 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 11:38:49 by alcaball          #+#    #+#             */
-/*   Updated: 2024/01/25 13:46:48 by alcaball         ###   ########.fr       */
+/*   Updated: 2024/01/25 17:46:38 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+int	check_eof(char *s1, char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	if (!s1 || !s2)
+		return (1);
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+		{
+			if (s2[i] == '\n')
+				return (0);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 int	write_heredoc(char *eof)
 {
 	char	*line;
 	int		tmpfd;
 
-	line = NULL;
 	tmpfd = open("/tmp/herepipex", O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (tmpfd < 0)
-		return (ft_error_msg(1, "error opening heredoc"), 1);
+		return (ft_error(errno, "error opening heredoc"), 1);
 	while (1)
 	{
 		write(1, ">", 1);
-		line = get_next_line(tmpfd);
+		line = get_next_line(0);
 		if (line == NULL)
 			break ;
-		if (ft_strncmp(eof, line, ft_strlen(eof)) == 0)
+		if (check_eof(eof, line) == 0)
 			break ;
 		ft_putstr_fd(line, tmpfd);
 		free(line);
