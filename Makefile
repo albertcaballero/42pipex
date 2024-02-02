@@ -10,7 +10,7 @@ PURPLE  =   \033[38;5;93m
 PINK	=	\033[38;5;219m
 NC      =   \033[0m
 
-FILES = pipex_bonus.c parseargs.c err_handling.c heredoc.c utils.c
+FILES = pipex_bonus.c parseargs.c err_handling.c heredoc.c utils.c parse_quotes.c
 SRCDIR = src/
 SRC = $(addprefix $(SRCDIR),$(FILES))
 DIR_OBJ = tmp/

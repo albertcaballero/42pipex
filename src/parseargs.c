@@ -6,30 +6,30 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:44:17 by alcaball          #+#    #+#             */
-/*   Updated: 2024/02/02 11:55:55 by alcaball         ###   ########.fr       */
+/*   Updated: 2024/02/02 15:29:26 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-void	check_cmd_permissions(t_comm *cmd)
+int	check_cmd_permissions(char *cname)
 {
-	cmd->perm = 0;
-	if (access(cmd->path, F_OK) < 0)
-		cmd->perm = NOCOMMAND;
-	else if (access(cmd->path, X_OK) < 0)
-		cmd->perm = NOXECUTE;
+	if (access(cname, F_OK) < 0)
+		return (NOCOMMAND);
+	else if (access(cname, X_OK) < 0)
+		return (NOXECUTE);
+	return (PERMOK);
 }
 
-void	check_file_permissions(t_fd *fd)
+int	check_file_permissions(char *fname)
 {
-	fd->perm = 0;
-	if (access(fd->name, F_OK) < 0)
-		fd->perm = NOFILE;
-	else if (access(fd->name, R_OK) < 0)
-		fd->perm = NOREAD;
-	else if (access(fd->name, W_OK) < 0)
-		fd->perm = NOWRITE;
+	if (access(fname, F_OK) < 0)
+		return (NOFILE);
+	else if (access(fname, R_OK) < 0)
+		return (NOREAD);
+	else if (access(fname, W_OK) < 0)
+		return (NOWRITE);
+	return (PERMOK);
 }
 
 char	**check_path_var(char **envp)
@@ -76,12 +76,11 @@ t_comm	parse_comms(char *c1, char **paths)
 	char	*temp;
 
 	i = 0;
-	cmd.arg = ft_split(c1, ' ');
+	cmd.arg = ft_split_quotes(c1);
 	cmd.name = cmd.arg[0];
-	cmd.path = NULL;
 	if (paths == NULL)
 		return (cmd);
-	if (access(cmd.arg[0], R_OK) == 0 || c1[0] == '.')
+	if (access(cmd.arg[0], F_OK) == 0 || c1[0] == '.')
 	{
 		cmd.path = cmd.arg[0];
 		return (cmd);
@@ -91,7 +90,7 @@ t_comm	parse_comms(char *c1, char **paths)
 		temp = ft_strjoin(paths[i], "/");
 		cmd.path = ft_strjoin(temp, cmd.arg[0]);
 		free (temp);
-		if (access(cmd.path, R_OK) == 0)
+		if (access(cmd.path, F_OK) == 0)
 			return (cmd);
 		i++;
 		free(cmd.path);

@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:35:29 by albert            #+#    #+#             */
-/*   Updated: 2024/02/02 13:18:44 by alcaball         ###   ########.fr       */
+/*   Updated: 2024/02/02 15:43:26 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,20 @@
 void	child_process(t_pipex key, t_comm cmd, int *pipes)
 {
 	close (pipes[0]);
-	error_exit(cmd, key);
+	cmd.perm = check_cmd_permissions(cmd.path);
+	error_exit(cmd);
 	if (cmd.id == 0)
+	{
+		if (key.fd[0].perm != PERMOK && key.fd[0].perm != NOWRITE)
+			ft_error(key.fd[0].perm, key.fd[0].name);
 		dup2(key.fd[0].fd, STDIN_FILENO);
+	}
 	if (cmd.id == key.cmdcont - 1)
+	{
+		if (key.fd[1].perm != PERMOK && key.fd[1].perm != NOREAD)
+			ft_error(key.fd[1].perm, key.fd[1].name);
 		dup2(key.fd[1].fd, STDOUT_FILENO);
+	}
 	else
 		dup2(pipes[1], STDOUT_FILENO);
 	close (pipes[1]);
@@ -27,12 +36,32 @@ void	child_process(t_pipex key, t_comm cmd, int *pipes)
 		ft_error(errno, cmd.arg[0]);
 }
 
+int	get_exit_status(t_pipex key, pid_t *sig)
+{
+	int	i;
+	int	status;
+
+	i = 0;
+	while (i < key.cmdcont)
+		waitpid(sig[i++], &status, 0);
+	free(sig);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	else if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGINT)
+			return (130);
+		else if (WTERMSIG(status) == SIGQUIT)
+			return (131);
+	}
+	return (0);
+}
+
 void	pipex(t_pipex key, t_comm *cmd)
 {
 	pid_t	*sig;
 	int		pipes[2];
 	int		stdtmp[2];
-	int		status;
 	int		i;
 
 	i = 0;
@@ -52,14 +81,11 @@ void	pipex(t_pipex key, t_comm *cmd)
 		close (pipes[0]);
 		i++;
 	}
-	i = 0;
-	while (i < key.cmdcont)
-		waitpid(sig[i++], &status, 0);
-	free(sig);
+	i = get_exit_status(key, sig);
 	duptemp(stdtmp, OUT);
 	close_pipes_fds(pipes, key);
-	if (WIFEXITED(status))
-		exit(WEXITSTATUS(status));
+	if (i != 0)
+		exit (i);
 }
 
 void	init_files(t_pipex *key, char **argv)
@@ -72,8 +98,13 @@ void	init_files(t_pipex *key, char **argv)
 		key->fd[1].fd = open(key->fd[1].name, O_RDWR | O_CREAT | O_APPEND, 420);
 		return ;
 	}
-	key->fd[0].fd = open(key->fd[0].name, O_RDONLY);
-	key->fd[1].fd = open(key->fd[1].name, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	else
+	{
+		key->fd[0].fd = open(key->fd[0].name, O_RDONLY);
+		key->fd[1].fd = open(key->fd[1].name, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	}
+	key->fd[0].perm = check_file_permissions(key->fd[0].name);
+	key->fd[1].perm = check_file_permissions(key->fd[1].name);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -100,7 +131,6 @@ int	main(int argc, char **argv, char **envp)
 	}
 	free_split(paths);
 	pipex(key, cmd);
-	i = 0;
 	ft_free_cmd(cmd, key.cmdcont);
 	exit(EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:13:42 by alcaball          #+#    #+#             */
-/*   Updated: 2024/02/02 12:28:33 by alcaball         ###   ########.fr       */
+/*   Updated: 2024/02/02 15:31:45 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*my_malloc(size_t size)
 	thing = malloc(size);
 	if (thing == NULL)
 	{
-		perror("malloc: ");
+		perror("malloc");
 		exit(errno);
 	}
 	else
@@ -32,6 +32,8 @@ void	close_pipes_fds(int *pipes, t_pipex key)
 	close(pipes[1]);
 	close(key.fd[0].fd);
 	close(key.fd[1].fd);
+	if (key.f_here)
+		unlink("/tmp/herepipex");
 }
 
 void	duptemp(int *stdtmp, int flag)
