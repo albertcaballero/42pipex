@@ -6,11 +6,11 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 11:38:49 by alcaball          #+#    #+#             */
-/*   Updated: 2024/01/25 17:46:38 by alcaball         ###   ########.fr       */
+/*   Updated: 2024/02/02 11:55:51 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
 int	check_eof(char *s1, char *s2)
 {

@@ -6,11 +6,25 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:13:42 by alcaball          #+#    #+#             */
-/*   Updated: 2024/01/25 17:19:07 by alcaball         ###   ########.fr       */
+/*   Updated: 2024/02/02 12:28:33 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
+
+void	*my_malloc(size_t size)
+{
+	void	*thing;
+
+	thing = malloc(size);
+	if (thing == NULL)
+	{
+		perror("malloc: ");
+		exit(errno);
+	}
+	else
+		return (thing);
+}
 
 void	close_pipes_fds(int *pipes, t_pipex key)
 {

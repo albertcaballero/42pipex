@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:36:06 by albert            #+#    #+#             */
-/*   Updated: 2024/01/25 17:15:13 by alcaball         ###   ########.fr       */
+/*   Updated: 2024/02/02 13:19:02 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <errno.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include "libft/libft.h"
+# include "src/libft/libft.h"
 
 # define NOFILE 404
 # define NOREAD 403
@@ -62,8 +62,9 @@ void	ft_free_cmd(t_comm *cmds, int count);
 void	check_cmd_permissions(t_comm *cmd);
 void	check_file_permissions(t_fd *fd);
 int		write_heredoc(char *eof);
-void	error_exit(t_comm cmd);
+void	error_exit(t_comm cmd, t_pipex key);
 void	close_pipes_fds(int *pipes, t_pipex key);
 void	duptemp(int *stdtmp, int flag);
+void	*my_malloc(size_t size);
 
 #endif

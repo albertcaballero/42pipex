@@ -6,16 +6,16 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:35:29 by albert            #+#    #+#             */
-/*   Updated: 2024/01/25 17:34:12 by alcaball         ###   ########.fr       */
+/*   Updated: 2024/02/02 13:18:44 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
 void	child_process(t_pipex key, t_comm cmd, int *pipes)
 {
 	close (pipes[0]);
-	error_exit(cmd);
+	error_exit(cmd, key);
 	if (cmd.id == 0)
 		dup2(key.fd[0].fd, STDIN_FILENO);
 	if (cmd.id == key.cmdcont - 1)
@@ -36,7 +36,7 @@ void	pipex(t_pipex key, t_comm *cmd)
 	int		i;
 
 	i = 0;
-	sig = malloc (sizeof(pid_t) * (key.cmdcont));
+	sig = my_malloc(sizeof(pid_t) * (key.cmdcont));
 	duptemp(stdtmp, IN);
 	while (i < key.cmdcont)
 	{
@@ -69,7 +69,7 @@ void	init_files(t_pipex *key, char **argv)
 	if (key->f_here)
 	{
 		key->fd[0].fd = write_heredoc(argv[2]);
-		key->fd[1].fd = open(key->fd[1].name, O_RDWR | O_CREAT | O_APPEND, 0644);
+		key->fd[1].fd = open(key->fd[1].name, O_RDWR | O_CREAT | O_APPEND, 420);
 		return ;
 	}
 	key->fd[0].fd = open(key->fd[0].name, O_RDONLY);
@@ -90,9 +90,7 @@ int	main(int argc, char **argv, char **envp)
 	init_files(&key, argv);
 	paths = check_path_var(envp);
 	key.env = envp;
-	cmd = malloc(sizeof(*cmd) * (key.cmdcont));
-	if (!cmd)
-		ft_error(errno, NULL);
+	cmd = my_malloc(sizeof(*cmd) * (key.cmdcont));
 	i = 0;
 	while (i < key.cmdcont)
 	{

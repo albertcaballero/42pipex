@@ -1,5 +1,4 @@
 NAME = pipex
-BNAME = pipexb
 LIBRARY = pipex.h
 CFLAGS= -Wall -Wextra -Werror
 
@@ -11,33 +10,43 @@ PURPLE  =   \033[38;5;93m
 PINK	=	\033[38;5;219m
 NC      =   \033[0m
 
-SRC = pipex_bonus.c parseargs.c err_handling.c heredoc.c utils.c
-
+FILES = pipex_bonus.c parseargs.c err_handling.c heredoc.c utils.c
+SRCDIR = src/
+SRC = $(addprefix $(SRCDIR),$(FILES))
+DIR_OBJ = tmp/
 OBJS = $(addprefix $(DIR_OBJ),$(SRC:.c=.o))
 
-all: makelib $(NAME)
+all: tempdir makelib $(NAME)
 
-$(NAME): $(LIBRARY) Makefile $(SRC) libft/libft.a
-	@cc $(CFLAGS) $(OBJS) -L./libft -lft -o $(NAME) #-fsanitize="address,undefined" -g
-	@printf "${PURPLE}== PIPEX COMPILED SUCCESSFULLY ==\n${NC}"
+$(NAME): $(OBJS)
+	@cc $(CFLAGS) $(OBJS) -L./src/libft -lft -o $(NAME) #-fsanitize="address,undefined" -g
+	@echo "${PURPLE}== PIPEX COMPILED SUCCESSFULLY ==${NC}"
+
+$(DIR_OBJ)%.o: %.c Makefile $(LIBRARY) src/libft/libft.a
+	@mkdir -p $(dir $@)
+	@echo "${YELLOW}Compiling: ${NC}$@"
+	@cc $(CFLAGS) -c $< -o $@
+
+tempdir:
+	@mkdir -p $(DIR_OBJ)
 
 makelib:
-	@$(MAKE) -C ./libft bonus --no-print-directory -silent
-	@printf "${GREEN}Libft ok👍\n${NC}"
+	@$(MAKE) -C ./src/libft bonus --no-print-directory -silent
+	@echo "${GREEN}Libft ok👍${NC}"
 
 clean:
-	@$(MAKE) -C ./libft clean --no-print-directory -silent
+	@$(MAKE) -C ./src/libft fclean --no-print-directory -silent
+	@rm -rf $(DIR_OBJ)
 
 fclean: clean
-	@printf "${RED}....EXTERMINATING....\n${NC}"
-	@$(MAKE) -C ./libft fclean --no-print-directory -silent
+	@echo "${RED}....EXTERMINATING....${NC}"
 	@sleep 0.5
-	@printf "${PINK}🧨\tLIBFT\n${NC}"
+	@echo "${PINK}🧨\tLIBFT${NC}"
 	@rm -f $(NAME)
 	@sleep 0.5
-	@printf "${PINK}🧨\tPIPEX\n${NC}"
+	@echo "${PINK}🧨\tPIPEX${NC}"
 	@sleep 0.5
-	@printf "${RED}.......DONE.......\n${NC}"
+	@echo "${RED}.......DONE.......${NC}"
 
 re: fclean all
 

@@ -6,20 +6,22 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 12:37:29 by albert            #+#    #+#             */
-/*   Updated: 2024/01/25 17:14:40 by alcaball         ###   ########.fr       */
+/*   Updated: 2024/02/02 13:19:45 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
-void	error_exit(t_comm cmd)
+void	error_exit(t_comm cmd, t_pipex key)
 {
+	if (access(key.fd[0].name) < 0);
+		// ft_error esto falta
 	if (cmd.arg[0] == NULL)
 		exit (0);
 	if (cmd.perm == NOCOMMAND && cmd.arg[0] != NULL)
-		ft_error(127, cmd.arg[0]);
+		ft_error(NOCOMMAND, cmd.arg[0]);
 	if (cmd.perm == NOXECUTE)
-		ft_error(126, cmd.arg[0]);
+		ft_error(NOXECUTE, cmd.arg[0]);
 }
 
 void	ft_error_file(int code, char *str)

@@ -6,11 +6,11 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:44:17 by alcaball          #+#    #+#             */
-/*   Updated: 2024/01/25 16:55:55 by alcaball         ###   ########.fr       */
+/*   Updated: 2024/02/02 11:55:55 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
 void	check_cmd_permissions(t_comm *cmd)
 {
