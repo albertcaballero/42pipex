@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:35:29 by albert            #+#    #+#             */
-/*   Updated: 2024/02/02 15:43:26 by alcaball         ###   ########.fr       */
+/*   Updated: 2024/02/04 11:07:36 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,8 @@ void	pipex(t_pipex key, t_comm *cmd)
 		i++;
 	}
 	i = get_exit_status(key, sig);
-	duptemp(stdtmp, OUT);
-	close_pipes_fds(pipes, key);
-	if (i != 0)
-		exit (i);
+	close_pipes_fds(key, stdtmp);
+	exit (i);
 }
 
 void	init_files(t_pipex *key, char **argv)

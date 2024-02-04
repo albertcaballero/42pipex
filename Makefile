@@ -31,7 +31,7 @@ tempdir:
 	@mkdir -p $(DIR_OBJ)
 
 makelib:
-	@$(MAKE) -C ./src/libft bonus --no-print-directory -silent
+	@$(MAKE) -C ./src/libft bonus --no-print-directory
 	@echo "${GREEN}Libft ok👍${NC}"
 
 clean:

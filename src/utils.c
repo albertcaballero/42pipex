@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:13:42 by alcaball          #+#    #+#             */
-/*   Updated: 2024/02/02 15:31:45 by alcaball         ###   ########.fr       */
+/*   Updated: 2024/02/04 11:09:35 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,13 @@ void	*my_malloc(size_t size)
 		return (thing);
 }
 
-void	close_pipes_fds(int *pipes, t_pipex key)
+void	close_pipes_fds(t_pipex key, int *stdtmp)
 {
-	close(pipes[0]);
-	close(pipes[1]);
-	close(key.fd[0].fd);
-	close(key.fd[1].fd);
+	duptemp(stdtmp, OUT);
+	if (key.fd[0].fd != -1)
+		close(key.fd[0].fd);
+	if (key.fd[0].fd != -1)
+		close(key.fd[1].fd);
 	if (key.f_here)
 		unlink("/tmp/herepipex");
 }
@@ -42,12 +43,18 @@ void	duptemp(int *stdtmp, int flag)
 	{
 		stdtmp[0] = dup(STDIN_FILENO);
 		stdtmp[1] = dup(STDOUT_FILENO);
+		if (stdtmp[0] < 0 || stdtmp[1] < 0)
+			ft_error(errno, NULL);
 	}
 	if (flag == OUT)
 	{
-		dup2(stdtmp[0], STDIN_FILENO);
-		dup2(stdtmp[1], STDOUT_FILENO);
-		close(stdtmp[0]);
-		close(stdtmp[1]);
+		if (dup2(stdtmp[0], STDIN_FILENO) < 0)
+			ft_error(errno, NULL);
+		if (dup2(stdtmp[1], STDOUT_FILENO) < 0)
+			ft_error(errno, NULL);
+		if (close(stdtmp[0]) < 0)
+			ft_error(errno, NULL);
+		if (close(stdtmp[1]) < 0)
+			ft_error(errno, NULL);
 	}
 }

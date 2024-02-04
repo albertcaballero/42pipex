@@ -6,7 +6,7 @@
 /*   By: alcaball <alcaball@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:36:06 by albert            #+#    #+#             */
-/*   Updated: 2024/02/02 15:20:43 by alcaball         ###   ########.fr       */
+/*   Updated: 2024/02/04 11:07:27 by alcaball         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int		check_cmd_permissions(char *cname);
 int		check_file_permissions(char *fname);
 int		write_heredoc(char *eof);
 void	error_exit(t_comm cmd);
-void	close_pipes_fds(int *pipes, t_pipex key);
+void	close_pipes_fds(t_pipex key, int *stdtmp);
 void	duptemp(int *stdtmp, int flag);
 void	*my_malloc(size_t size);
 char	**ft_split_quotes(char *s);
